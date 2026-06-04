@@ -1,0 +1,50 @@
+[project]
+name = "aidev"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.9",
+    "docx2txt>=0.9",
+    "fastapi>=0.115.0",
+    "jieba>=0.42.1",
+    "langchain>=1.3.4",
+    "langchain-chroma>=1.1.0",
+    "langchain-classic>=1.0.7",
+    "langchain-community>=0.4.2",
+    "langchain-ollama>=1.1.0",
+    "langchain-openai>=1.2.2",
+    "langchain-text-splitters>=1.1.2",
+    "langgraph>=0.4.0",
+    "modelscope>=1.37.1",
+    "pypdf>=6.13.0",
+    "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.32",
+    "rank-bm25>=0.2.2",
+    "sentence-transformers>=5.5.1",
+    "torch>=2.12.0",
+    "transformers>=4.51.0",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = ["-v", "--tb=short", "--ignore=tests/test_suite.py"]
+filterwarnings = [
+    "ignore::UserWarning:jieba.*",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "rag: RAG retrieval chain tests",
+    "agent: Agent routing tests",
+    "index: Index building tests",
+]
