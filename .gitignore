@@ -33,5 +33,6 @@ frontend/.turbo/
 Thumbs.db
 
 # 生产文档
+.agents
 plan.md
 fix.md
