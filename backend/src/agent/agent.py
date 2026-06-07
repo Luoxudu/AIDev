@@ -1,5 +1,7 @@
 """Agent 构建：CLI 用旧 API + Web 用 langgraph create_react_agent。"""
 
+import asyncio
+
 from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import tool
@@ -21,7 +23,7 @@ def _get_rag_chain():
 
 
 @tool
-def search_knowledge_base(query: str) -> str:
+async def search_knowledge_base(query: str) -> str:
     """从公司内部知识库中检索并回答关于文档内容的问题。
 
     当用户提出的问题可能与公司文档、内部知识、产品说明相关时，
@@ -34,7 +36,8 @@ def search_knowledge_base(query: str) -> str:
         基于知识库文档内容的回答。如果文档中没有相关信息，会明确告知。
     """
     rag_chain = _get_rag_chain()
-    result = rag_chain.invoke({"input": query})
+    # 在线程池中执行同步的 RAG 链，避免阻塞 asyncio 事件循环
+    result = await asyncio.to_thread(rag_chain.invoke, {"input": query})
     return result["answer"]
 
 
